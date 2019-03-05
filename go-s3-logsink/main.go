@@ -2,14 +2,15 @@ package main
 
 import (
 	"fmt"
-	"github.com/StevenACoffman/logsink/go-s3-logsink/server"
-	"github.com/apex/log"
-	"github.com/apex/log/handlers/json"
-	"github.com/gorilla/pat"
 	"net/http"
 	"os"
 	"strconv"
 	"time"
+
+	"github.com/StevenACoffman/logsink/go-s3-logsink/server"
+	"github.com/apex/log"
+	"github.com/apex/log/handlers/json"
+	"github.com/gorilla/pat"
 )
 
 func init() {
@@ -27,6 +28,7 @@ func main() {
 	env.S3Session = server.GetSession(env.S3Region)
 
 	port := getEnv("PORT", "3000")
+	log.SetLevelFromString(getEnv("LOG_LEVEL", "info"))
 	addr := ":" + port
 	app := pat.New()
 	app.Get("/", server.Get)
